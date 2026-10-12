@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookly - Admin Upload</title>
+
+  <script src="/js/guard.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input,
+    textarea,
+    button {
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+    <h1 style="margin:0;">Admin — Upload Book</h1>
+    <button id="logout" style="cursor:pointer; padding:8px 16px;">Logout</button>
+  </header>
+
+  <form id="uploadForm">
+
+    <input
+      type="text"
+      id="title"
+      placeholder="Book title"
+      required
+    >
+
+    <input
+      type="text"
+      id="author"
+      placeholder="Author"
+      required
+    >
+
+    <textarea
+      id="description"
+      placeholder="Book description"
+      required
+    ></textarea>
+
+    <input
+      type="text"
+      id="category"
+      placeholder="Category (e.g. Technology)"
+      required
+    >
+
+    <input
+      type="text"
+      id="genre"
+      placeholder="Genre (e.g. Cybersecurity)"
+      required
+    >
+
+    <input
+      type="number"
+      id="price"
+      placeholder="Price in INR (0 for free)"
+      min="0"
+      step="0.01"
+      value="0"
+      required
+    >
+
+    <label>
+      Select PDF or EPUB:
+    </label>
+
+    <input
+      type="file"
+      id="book"
+      accept=".pdf,.epub,application/pdf,application/epub+zip"
+      required
+    >
+
+    <button type="submit">
+      Upload Book
+    </button>
+
+  </form>
+
+  <p id="message"></p>
+
+  <script src="/js/util.js"></script>
+  <script src="/js/admin.js"></script>
+
+</body>
+</html>

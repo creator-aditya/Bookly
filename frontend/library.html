@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Library — Bookly</title>
+  <script src="/js/guard.js"></script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="/">BOOKLY<span>.</span></a>
+    <nav><a href="/home.html">Home</a><a href="/discover.html">Discover</a></nav>
+  </header>
+  <main class="dashboard">
+    <section class="welcome">
+      <p class="eyebrow">YOUR LIBRARY</p>
+      <h1>Your saved books.</h1>
+      <p class="muted">Books you add to your library stay available here.</p>
+    </section>
+    <section class="section">
+      <div id="libraryGrid" class="book-grid"></div>
+    </section>
+  </main>
+  <script src="/js/util.js"></script>
+  <script src="/js/library.js"></script>
+</body>
+</html>

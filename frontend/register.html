@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — Bookly</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="brand" href="/">BOOKLY<span>.</span></a>
+    <p class="eyebrow">18+ ONLY</p>
+    <h1>Create your reading account.</h1>
+    <p class="muted">Your date of birth is used only to enforce the platform's age requirement.</p>
+
+    <form id="registerForm">
+      <label>Email<input type="email" id="email" required autocomplete="email"></label>
+      <label>Date of birth<input type="date" id="dateOfBirth" required></label>
+      <label>Password<input type="password" id="password" minlength="8" required autocomplete="new-password"></label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="terms" required>
+        <span>I confirm that the date of birth above is accurate.</span>
+      </label>
+      <button class="button primary full" type="submit">Create Account</button>
+      <p id="message" class="form-message"></p>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a href="/login.html">Log in</a></p>
+  </main>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

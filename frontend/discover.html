@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover — Bookly</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="/">BOOKLY<span>.</span></a>
+    <nav><a href="/home.html">Home</a><a href="/library.html">My Library</a></nav>
+  </header>
+  <main class="dashboard">
+    <section class="welcome">
+      <p class="eyebrow">DISCOVER</p>
+      <h1>Find something you'll love.</h1>
+      <div class="search-bar">
+        <input id="searchInput" placeholder="Search title or author...">
+        <button id="searchButton" class="button primary">Search</button>
+      </div>
+    </section>
+    <section class="section">
+      <div id="bookGrid" class="book-grid"></div>
+    </section>
+  </main>
+  <script src="/js/util.js"></script>
+  <script src="/js/discover.js"></script>
+
+</body>
+</html>

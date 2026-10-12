@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Bookly</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="brand" href="/">BOOKLY<span>.</span></a>
+    <p class="eyebrow">WELCOME BACK</p>
+    <h1>Continue your reading.</h1>
+    <p class="muted">Log in to access your library.</p>
+
+    <form id="loginForm">
+      <label>Email<input type="email" id="email" required autocomplete="email"></label>
+      <label>Password<input type="password" id="password" required autocomplete="current-password"></label>
+      <button class="button primary full" type="submit">Log In</button>
+      <p id="message" class="form-message"></p>
+    </form>
+
+    <p class="auth-switch">New here? <a href="/register.html">Create an account</a></p>
+  </main>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

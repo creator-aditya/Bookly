@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — Bookly</title>
+  
+  <!-- 1. Guard runs first to prevent unauthorized flash of content -->
+  <script src="/js/guard.js"></script>
+
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="/">BOOKLY<span>.</span></a>
+    <nav>
+      <a href="/discover.html">Discover</a>
+      <a href="/library.html">My Library</a>
+      <button id="logout" class="nav-button" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+    <section class="welcome">
+      <p class="eyebrow">YOUR READING SPACE</p>
+      <h1>Welcome back.</h1>
+      <p id="userEmail" class="muted"></p>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Recommended starting points</h2>
+      </div>
+      <div id="bookGrid" class="book-grid">
+        <div class="loading">Loading books...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/util.js"></script>
+  <script src="/js/home.js"></script>
+
+</body>
+</html>

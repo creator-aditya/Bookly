@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookly — Find Your Next Story</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="/">BOOKLY<span>.</span></a>
+    <nav>
+      <a href="#discover">Discover</a>
+      <a href="#categories">Categories</a>
+      <a href="/login.html">Login</a>
+      <a class="nav-button" href="/register.html">Get Started</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">YOUR DIGITAL LIBRARY</p>
+        <h1>Find your next <em>unforgettable</em> story.</h1>
+        <p class="hero-text">Discover books that match your interests, build your personal library, and read without distractions.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="/register.html">Start Reading</a>
+          <a class="button secondary" href="#discover">Explore Books</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="book-stack">
+          <div class="floating-book book-one">THE<br>ART<br>OF<br>READING<br></div>
+          <div class="floating-book book-two">THE ARCHIVE<br> OF THOUGHT</div>
+          <div class="floating-book book-three">YOUR<br>NEXT<br>CHAPTER</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="discover" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DISCOVER</p>
+          <h2>Books worth opening.</h2>
+        </div>
+        <a href="/discover.html" class="text-link">View all →</a>
+      </div>
+      <div id="bookGrid" class="book-grid">
+        <div class="loading">Loading books...</div>
+      </div>
+    </section>
+
+    <section id="categories" class="section categories">
+      <p class="eyebrow">EXPLORE BY MOOD</p>
+      <h2>What do you feel like reading?</h2>
+      <div class="category-grid">
+        <a href="/discover.html?category=Fiction">Fiction</a>
+        <a href="/discover.html?category=Mystery">Mystery</a>
+        <a href="/discover.html?category=Science%20Fiction">Science Fiction</a>
+        <a href="/discover.html?category=Self-Help">Self-Help</a>
+        <a href="/discover.html?category=Finance">Finance</a>
+        <a href="/discover.html?category=Philosophy">Philosophy</a>
+        <a href="/discover.html?category=Medical">Medical</a>
+        <a href="/discover.html?category=Kids">Kids</a>
+        <a href="/discover.html?category=Devotional">Devotional</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>BOOKLY.</strong>
+    <span>Read more. Discover better.</span>
+  </footer>
+
+  <script src="/js/util.js"></script>
+  <script src="/js/home.js"></script>
+  
+</body>
+</html>
