@@ -51,26 +51,26 @@ Upload a PDF or EPUB as an admin, and Bookly stores the file in Supabase, extrac
 - No build step — served statically by Express
 
 ## 📁 Project Structure
+
 bookly/
 ├── backend/
-│ ├── lib/ # extractMetadata, helpers
-│ ├── middleware/ # auth
-│ ├── test/ # node:test suites
-│ ├── db.js # pg Pool
-│ ├── server.js # Express app
-│ └── supabase.js # Supabase client
+│   ├── lib/              # extractMetadata, helpers
+│   ├── middleware/       # auth
+│   ├── test/             # node:test suites
+│   ├── db.js             # pg Pool
+│   ├── server.js         # Express app
+│   └── supabase.js       # Supabase client
 ├── database/
-│ ├── schema.sql # tables, indexes, RLS
-│ └── seed.sql # starter books
+│   ├── schema.sql        # tables, indexes, RLS
+│   └── seed.sql          # starter books
 ├── frontend/
-│ ├── css/ js/
-│ └── *.html # landing, discover, library, reader, admin
-├── model/ # FastAPI AI service
-│ ├── app.py
-│ └── requirements.txt
-├── render.yaml # Render deploy config
+│   ├── css/  js/
+│   └── *.html            # landing, discover, library, reader, admin
+├── model/                # FastAPI AI service
+│   ├── app.py
+│   └── requirements.txt
+├── render.yaml           # Render deploy config
 └── package.json
-
 
 ## ⚡ Quick Start
 
