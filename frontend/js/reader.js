@@ -9,7 +9,7 @@ const bookAuthor = document.getElementById("bookAuthor");
 function showMessage(text) {
   message.textContent = text;
   message.style.display = "block";
-  reader.style.display = "none";
+  if (reader) reader.style.display = "none";
 }
 
 async function loadBook() {

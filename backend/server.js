@@ -926,40 +926,29 @@ app.get(
         });
       }
 
-      const {
-        data,
-        error
-      } =
-        await supabase.storage
-          .from("books")
-          .createSignedUrl(
-            book.file_key,
-            300
-          );
-
-      if (
-        error ||
-        !data?.signedUrl
-      ) {
-        console.error(error);
-
-        return res.status(500).json({
-          error:
-            "Unable to create secure reading URL."
-        });
-      }
+      // === CHANGED ===
+      // Previously this route returned a Supabase signed URL. That URL
+      // carried scope:"download", so Chrome would download it instead
+      // of rendering the PDF inside the reader iframe. Now we return a
+      // same-origin URL that streams the file from our own server.
+      //
+      // The reader iframe cannot send an Authorization header, so the
+      // JWT has to be passed in the query string. The /file route
+      // below re-verifies it before sending any bytes.
+      const rawToken = (req.headers.authorization || "")
+        .replace(/^Bearer\s+/i, "");
 
       res.json({
         book: {
           id: book.id,
           title: book.title,
           author: book.author,
-          file_type:
-            book.file_type
+          file_type: book.file_type
         },
         reading_url:
-          data.signedUrl
+          `/api/books/${book.id}/file?token=${encodeURIComponent(rawToken)}`
       });
+      // === END CHANGED ===
     } catch (error) {
       console.error(error);
 
@@ -970,6 +959,85 @@ app.get(
     }
   }
 );
+
+/* =========================
+   STREAM BOOK FILE
+========================= */
+// === ADDED ===
+// Streams the book file from Supabase storage to the browser with
+// Content-Disposition: inline so the browser's PDF viewer renders it.
+// Token is accepted from the Authorization header OR the ?token= query
+// string, because <iframe src="..."> cannot send headers.
+
+app.get(
+  "/api/books/:id/file",
+  async (req, res) => {
+    const header = req.headers.authorization || "";
+    const bearer = /^Bearer\s+(\S+)$/i.exec(header);
+    const token = bearer ? bearer[1] : req.query.token;
+
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized." });
+    }
+
+    try {
+      jwt.verify(token, process.env.JWT_SECRET, {
+        algorithms: ["HS256"]
+      });
+    } catch (err) {
+      const expired = err.name === "TokenExpiredError";
+      return res.status(401).json({
+        error: expired ? "Your session has expired." : "Invalid session."
+      });
+    }
+
+    try {
+      const result = await pool.query(
+        `SELECT file_key, file_type, is_free
+         FROM books
+         WHERE id = $1`,
+        [req.params.id]
+      );
+
+      if (!result.rowCount) {
+        return res.status(404).json({ error: "Book not found." });
+      }
+
+      const { file_key, file_type, is_free } = result.rows[0];
+
+      if (!file_key) {
+        return res.status(404).json({ error: "File not available." });
+      }
+
+      if (!is_free) {
+        return res.status(403).json({ error: "This is a paid book." });
+      }
+
+      const { data, error } = await supabase.storage
+        .from("books")
+        .download(file_key);
+
+      if (error || !data) {
+        console.error(error);
+        return res.status(500).json({ error: "Unable to fetch file." });
+      }
+
+      const buffer = Buffer.from(await data.arrayBuffer());
+
+      res.setHeader(
+        "Content-Type",
+        file_type === "PDF" ? "application/pdf" : "application/epub+zip"
+      );
+      res.setHeader("Content-Disposition", "inline");
+      res.setHeader("Cache-Control", "private, max-age=300");
+      res.send(buffer);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Unable to open book." });
+    }
+  }
+);
+// === END ADDED ===
 
 /* =========================
    READING PROGRESS
