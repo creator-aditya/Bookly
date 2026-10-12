@@ -6,3 +6,7 @@ node_modules/
 .DS_Store
 coverage/
 *.zip
+__pycache__/
+*.pyc
+.venv/
+venv/
