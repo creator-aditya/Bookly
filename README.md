@@ -1,124 +1,95 @@
 # 📚 Bookly
 
-**An AI-powered book reading platform — discover, read, and track your library.**
+**An AI-powered book reading platform.**
 
-[![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)](https://expressjs.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-Storage-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-AI_Service-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-
----
-
-## ✨ What is Bookly?
-
-Bookly is a full-stack web application for readers. It pairs a Node/Express backend and a Postgres database with a Python AI service that generates semantic embeddings of every book, so recommendations are based on what a book is *about* — not just its category tag.
-
-Upload a PDF or EPUB as an admin, and Bookly stores the file in Supabase, extracts its metadata, generates a 384-dimensional embedding, and serves it to readers with progress tracking.
-
-## 🚀 Features
-
-| Feature | Description |
-|---|---|
-| 🔐 **JWT Authentication** | Register, log in, 18+ age gate, disposable-email blocklist |
-| 📖 **Book Catalog** | Browse, search by title/author, filter by category |
-| 📚 **My Library** | Save books, resume where you left off |
-| 📤 **Admin Upload** | PDF / EPUB upload with automatic metadata extraction |
-| 🧠 **AI Recommendations** | Sentence-transformer embeddings + cosine similarity |
-| 📄 **In-Browser Reader** | PDFs stream directly from the server, no downloads |
-| 💾 **Reading Progress** | Page and scroll position saved per user, per book |
+Bookly is a web application project that combines a Node.js backend, a PostgreSQL database, a web frontend, and a Python-based AI service.
 
 ## 🛠️ Tech Stack
 
-**Backend**
-- Node.js 22 + Express 5
-- PostgreSQL 18 (via `pg`)
-- JWT (`jsonwebtoken`) + bcrypt (`bcryptjs`)
-- Multer for file uploads
-- Helmet for security headers
-
-**Storage**
-- Supabase Storage (private `books` bucket, signed access)
-
-**AI Service**
-- FastAPI + `sentence-transformers/all-MiniLM-L6-v2`
-- 384-dimensional embeddings, cosine similarity ranking
-
-**Frontend**
-- Vanilla HTML / CSS / JavaScript
-- No build step — served statically by Express
+* **Backend:** Node.js, Express
+* **Database:** PostgreSQL
+* **Storage:** Supabase
+* **AI Service:** Python, FastAPI, Sentence Transformers
+* **Frontend:** HTML, CSS, JavaScript
 
 ## 📁 Project Structure
 
-bookly/
+Bookly/
 ├── backend/
-│   ├── lib/              # extractMetadata, helpers
-│   ├── middleware/       # auth
-│   ├── test/             # node:test suites
-│   ├── db.js             # pg Pool
-│   ├── server.js         # Express app
-│   └── supabase.js       # Supabase client
+│   ├── lib/
+│   ├── middleware/
+│   ├── test/
+│   ├── db.js
+│   ├── server.js
+│   └── supabase.js
 ├── database/
-│   ├── schema.sql        # tables, indexes, RLS
-│   └── seed.sql          # starter books
+│   ├── schema.sql
+│   └── seed.sql
 ├── frontend/
-│   ├── css/  js/
-│   └── *.html            # landing, discover, library, reader, admin
-├── model/                # FastAPI AI service
+│   ├── css/
+│   ├── js/
+│   └── *.html
+├── model/
 │   ├── app.py
 │   └── requirements.txt
-├── render.yaml           # Render deploy config
-└── package.json
+├── render.yaml
+├── package.json
+├── package-lock.json
+└── README.md
+   
 
-## ⚡ Quick Start
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 22+
-- PostgreSQL 15+
-- Python 3.10+ *(optional, for AI recommendations)*
-- A Supabase project *(for file storage)*
+* [Node.js](https://nodejs.org/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Python](https://www.python.org/) for the AI service
+* [Supabase](https://supabase.com/) for storage
 
-### 1. Clone and install
+### 1. Clone the Repository
 
 git clone https://github.com/creator-aditya/Bookly.git
 cd Bookly
+   
+
+### 2. Install Dependencies
+  
 npm install
+   
 
-2. Set up the database
+### 3. Configure Environment Variables
 
-createdb bookly
-psql -d bookly -f database/schema.sql
-psql -d bookly -f database/seed.sql   # optional seed books
+Create a `.env` file in the project root and configure the environment variables required by the backend.
 
-3. Configure environment
-Create a .env file at the project root:
+Keep database credentials, authentication secrets, and private storage keys out of source control.
 
-env
-PORT=3000
-DATABASE_URL=postgresql://postgres:password@127.0.0.1:5432/bookly
-JWT_SECRET=generate-a-random-string-at-least-32-chars
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-AI_SERVICE_URL=http://127.0.0.1:8000
-AI_REQUEST_TIMEOUT_MS=15000
+### 4. Start the Backend
 
-4. Start the AI service (optional)
+Run the development server:
+  
+npm run dev
+Alternatively, use the start script:
+
+npm start
+   
+
+### 5. Start the AI Service
+
+Navigate to the model directory:
 
 cd model
+Create and activate a Python virtual environment, then install the dependencies:
+ 
+python -m venv .venv
 python -m pip install -r requirements.txt
+   
+
+Start the service:
 uvicorn app:app --host 127.0.0.1 --port 8000
+   
+This command assumes that `model/app.py` exposes a FastAPI application named `app`.
 
-The app works without this — recommendations fall back to cold-start ordering.
+## 🔗 Repository
 
-5. Run Bookly
-npm run dev
-Open http://localhost:3000
-
-🧪 Tests
-node --test backend/test/
-
-📜 License
-MIT
+**GitHub:** https://github.com/creator-aditya/Bookly
