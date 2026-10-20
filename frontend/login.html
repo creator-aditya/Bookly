@@ -5,17 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login — Bookly</title>
   <link rel="stylesheet" href="/css/main.css">
+
+  <style>
+    /* Role selector — scoped to the login page */
+    .role-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 22px 0 4px;
+    }
+    .role-card {
+      border: 1.5px solid #e2dccd;
+      border-radius: 10px;
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      background: #fdfbf6;
+      transition: border-color .15s ease, background .15s ease;
+      user-select: none;
+    }
+    .role-card:hover { border-color: #c9bfa9; }
+    .role-card.selected {
+      border-color: #1a1a1a;
+      background: #f2ead9;
+    }
+    .role-icon {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+    .role-name {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+    }
+    .role-hint {
+      font-size: 11px;
+      color: #888;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+    #loginForm { display: none; }
+    #loginForm.active { display: block; }
+  </style>
 </head>
 <body class="auth-page">
   <main class="auth-card">
     <a class="brand" href="/">BOOKLY<span>.</span></a>
     <p class="eyebrow">WELCOME BACK</p>
     <h1>Continue your reading.</h1>
-    <p class="muted">Log in to access your library.</p>
+    <p class="muted">Choose how you'd like to sign in.</p>
+
+    <div class="role-grid" id="roleGrid" role="radiogroup" aria-label="Select account type">
+      <div class="role-card" data-role="READER" role="radio" tabindex="0" aria-checked="false">
+        <span class="role-icon">📖</span>
+        <div class="role-name">Reader</div>
+        <div class="role-hint">Browse and read</div>
+      </div>
+      <div class="role-card" data-role="ADMIN" role="radio" tabindex="0" aria-checked="false">
+        <span class="role-icon">🛡️</span>
+        <div class="role-name">Admin</div>
+        <div class="role-hint">Manage the platform</div>
+      </div>
+    </div>
 
     <form id="loginForm">
+      <input type="hidden" id="selectedRole" value="">
+
       <label>Email<input type="email" id="email" required autocomplete="email"></label>
       <label>Password<input type="password" id="password" required autocomplete="current-password"></label>
+
       <button class="button primary full" type="submit">Log In</button>
       <p id="message" class="form-message"></p>
     </form>

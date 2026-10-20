@@ -15,9 +15,7 @@
       padding: 20px;
     }
 
-    h1 {
-      margin-bottom: 30px;
-    }
+    h1 { margin-bottom: 30px; }
 
     form {
       display: flex;
@@ -45,6 +43,67 @@
     #message {
       margin-top: 20px;
       font-weight: bold;
+    }
+
+    .purchases-section {
+      margin-top: 48px;
+      border-top: 1px solid #eee;
+      padding-top: 24px;
+    }
+
+    .purchases-section h2 {
+      margin: 0 0 12px;
+    }
+
+    .purchases-section .hint {
+      color: #777;
+      font-size: 13px;
+      margin: 0 0 12px;
+    }
+
+    .purchase-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+
+    .purchase-card .row {
+      font-size: 13px;
+      color: #555;
+      margin-top: 4px;
+      word-break: break-word;
+    }
+
+    .purchase-card .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .purchase-card button {
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .purchase-card button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .purchase-card .btn-paid   { background: #1b5e20; }
+    .purchase-card .btn-reject { background: #b71c1c; }
+
+    .empty {
+      color: #888;
+      font-size: 14px;
+      padding: 12px 0;
     }
   </style>
 </head>
@@ -102,9 +161,7 @@
       required
     >
 
-    <label>
-      Select PDF or EPUB:
-    </label>
+    <label>Select PDF or EPUB:</label>
 
     <input
       type="file"
@@ -113,16 +170,28 @@
       required
     >
 
-    <button type="submit">
-      Upload Book
-    </button>
+    <button type="submit">Upload Book</button>
 
   </form>
 
   <p id="message"></p>
 
+  <!-- =========================
+       PENDING PURCHASES (MANUAL UPI)
+  ========================= -->
+
+  <section class="purchases-section">
+    <h2>Pending purchases</h2>
+    <p class="hint">
+      Verify the UTR against your bank / UPI app before clicking "Mark paid".
+    </p>
+    <button id="refreshPurchases" style="padding:8px 16px;font-size:14px;">Refresh</button>
+    <div id="purchaseList" style="margin-top:16px;"></div>
+  </section>
+
   <script src="/js/util.js"></script>
   <script src="/js/admin.js"></script>
+  <script src="/js/admin-purchases.js"></script>
 
 </body>
 </html>

@@ -3,6 +3,10 @@ function setMessage(text) {
   if (el) el.textContent = text;
 }
 
+/* =========================
+   REGISTER
+========================= */
+
 const registerForm = document.getElementById("registerForm");
 if (registerForm) {
   registerForm.addEventListener("submit", async (event) => {
@@ -43,10 +47,74 @@ if (registerForm) {
   });
 }
 
+/* =========================
+   LOGIN — role selector
+========================= */
+
+const roleGrid = document.getElementById("roleGrid");
+const roleInput = document.getElementById("selectedRole");
 const loginForm = document.getElementById("loginForm");
+
+function selectRole(role) {
+  if (!roleGrid || !roleInput || !loginForm) return;
+
+  roleGrid.querySelectorAll(".role-card").forEach((card) => {
+    const isSelected = card.dataset.role === role;
+    card.classList.toggle("selected", isSelected);
+    card.setAttribute("aria-checked", isSelected ? "true" : "false");
+  });
+
+  roleInput.value = role;
+  loginForm.classList.add("active");
+  setMessage("");
+}
+
+if (roleGrid && loginForm) {
+  // Skip the login form entirely if the user is already signed in.
+  if (localStorage.getItem("bookly_token")) {
+    try {
+      const existing = JSON.parse(localStorage.getItem("bookly_user") || "{}");
+      if (existing && existing.role) {
+        window.location.replace(
+          existing.role === "ADMIN" ? "/admin.html" : "/home.html"
+        );
+      }
+    } catch (_) {
+      /* malformed stored user — fall through to normal login */
+    }
+  }
+
+  roleGrid.addEventListener("click", (event) => {
+    const card = event.target.closest(".role-card");
+    if (card) selectRole(card.dataset.role);
+  });
+
+  roleGrid.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      const card = event.target.closest(".role-card");
+      if (card) {
+        event.preventDefault();
+        selectRole(card.dataset.role);
+      }
+    }
+  });
+}
+
+/* =========================
+   LOGIN — submit
+========================= */
+
 if (loginForm) {
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const role = roleInput ? roleInput.value : "";
+
+    if (!role) {
+      setMessage("Please select Reader or Admin first.");
+      return;
+    }
+
     setMessage("Logging in...");
 
     try {
@@ -55,7 +123,8 @@ if (loginForm) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: document.getElementById("email").value,
-          password: document.getElementById("password").value
+          password: document.getElementById("password").value,
+          role
         })
       });
 
@@ -64,7 +133,12 @@ if (loginForm) {
 
       localStorage.setItem("bookly_token", data.token);
       localStorage.setItem("bookly_user", JSON.stringify(data.user));
-      window.location.href = "/home.html";
+
+      if (role === "ADMIN" && data.user.role === "ADMIN") {
+        window.location.href = "/admin.html";
+      } else {
+        window.location.href = "/home.html";
+      }
     } catch (error) {
       setMessage(error.message);
     }

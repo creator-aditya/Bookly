@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy Book — Bookly</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #faf6ef; margin: 0; padding: 40px 20px; }
+    .wrap { max-width: 520px; margin: 0 auto; background: #fff; border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.08); padding: 32px; }
+    h1 { font-size: 22px; margin: 0 0 8px; }
+    .meta { color: #666; font-size: 14px; margin-bottom: 20px; }
+    .amount { font-size: 28px; font-weight: 700; margin: 16px 0; color: #b8860b; }
+    .qr { display: block; margin: 20px auto; width: 260px; height: 260px;
+          border: 1px solid #eee; border-radius: 8px; background: #fff; padding: 12px; }
+    .upi-id { text-align: center; font-size: 13px; color: #555; margin-top: 8px;
+              font-family: monospace; }
+    input[type="text"] {
+      width: 100%; padding: 12px; border: 1px solid #ddd;
+      border-radius: 8px; font-size: 14px; box-sizing: border-box; margin-top: 8px;
+    }
+    button { width: 100%; padding: 14px; border: 0; border-radius: 8px;
+             background: #111; color: #fff; font-size: 15px; font-weight: 600;
+             cursor: pointer; margin-top: 16px; }
+    button:disabled { opacity: .5; cursor: default; }
+    .status { text-align: center; padding: 16px; margin-top: 16px;
+              border-radius: 8px; font-size: 14px; display: none; }
+    .status.pending { background: #fff8e1; color: #8a6d00; }
+    .status.paid    { background: #e8f5e9; color: #1b5e20; }
+    .status.error   { background: #ffebee; color: #b71c1c; }
+    .steps { font-size: 14px; color: #444; line-height: 1.7; margin: 20px 0; }
+    .steps ol { padding-left: 20px; }
+    .back { display: inline-block; margin-top: 16px; color: #555; text-decoration: none; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 id="bookTitle">Loading…</h1>
+    <div class="meta" id="bookAuthor"></div>
+    <div class="amount" id="amount"></div>
+
+    <div class="steps">
+      <ol>
+        <li>Scan the QR below with GPay, PhonePe, Paytm, or any UPI app.</li>
+        <li>Pay the exact amount shown.</li>
+        <li>Enter the UTR / transaction ID from your UPI app.</li>
+        <li>Click "I've paid" and wait for admin verification.</li>
+      </ol>
+    </div>
+
+    <img id="qr" class="qr" alt="UPI QR code">
+    <div class="upi-id" id="upiId"></div>
+
+    <input id="note" type="text" placeholder="Enter UTR / transaction ID from your UPI app">
+    <button id="confirmBtn" disabled>I've paid</button>
+    <div class="status" id="status"></div>
+
+    <a class="back" href="/home.html">← Back to home</a>
+  </div>
+
+  <script src="/js/purchase.js"></script>
+</body>
+</html>

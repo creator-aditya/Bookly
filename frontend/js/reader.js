@@ -35,11 +35,27 @@ async function loadBook() {
       }
     );
 
-    if (response.status === 401 || response.status === 403) {
+    // 401 = no valid session at all → back to login.
+    // 403 = authenticated but not allowed. Two sub-cases:
+    //   - body.code === "PURCHASE_REQUIRED" → send them to pay.
+    //   - anything else → fall through to normal error display
+    //     (don't wipe the token — the session is fine).
+    if (response.status === 401) {
       localStorage.removeItem("bookly_token");
       localStorage.removeItem("bookly_user");
       window.location.replace("/login.html");
       return;
+    }
+
+    if (response.status === 403) {
+      const body = await response.json().catch(() => ({}));
+
+      if (body.code === "PURCHASE_REQUIRED") {
+        window.location.replace(`/purchase.html?id=${encodeURIComponent(bookId)}`);
+        return;
+      }
+
+      throw new Error(body.error || "You don't have access to this book.");
     }
 
     const data = await response.json().catch(() => ({}));
